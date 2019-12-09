@@ -12,7 +12,7 @@ def printImage(image):
         for i in image[start:end]:
             line += i
         line = line.replace("0", " ")
-        line = line.replace("1", "X")
+        line = line.replace("1", "█")
         line = line.replace("2", " ")
         print(line)
 
