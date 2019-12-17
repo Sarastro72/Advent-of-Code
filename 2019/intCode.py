@@ -5,7 +5,7 @@ class Process:
         self.running = True
         self.realtiveBase = 0
         self.outFunc = outFunc or (lambda v : print(v))
-        self.infunc = inFunc or (lambda : input("Input: "))
+        self.inFunc = inFunc or (lambda : input("Input: "))
         for i in range(len(mem)):
             self.mem[i] = mem[i]
     
@@ -54,7 +54,7 @@ class Process:
                 self.ptr += 4
             elif (cmd == 3): # Input
                 if (len(inputs) < 1):
-                    inp = self.infunc()
+                    inp = self.inFunc()
                 else:
                     inp = inputs.pop(0)
                 #print(f"input {inp}")

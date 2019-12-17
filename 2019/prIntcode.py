@@ -17,10 +17,7 @@ class IntCodePrinter:
             elif (m == 1):
                 param = "%d" % (val)
             elif (m == 2):
-                if (val >= 0):
-                    param = "b+%d" % (val)
-                else:
-                    param = "b%d" % (val)
+                param = "b[%d]" % (val)
             params.append(param)
         return params
 
