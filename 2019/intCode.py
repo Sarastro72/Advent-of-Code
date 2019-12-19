@@ -1,14 +1,27 @@
 class Process:
-    def __init__(self, mem, ptr=0, inFunc = None, outFunc = None):
+    def __init__(self, program, ptr=0, inFunc = None, outFunc = None):
+        self.program = program
+        self.outFunc = outFunc or (lambda v : print(v))
+        self.inFunc = inFunc or (lambda : input("Input: "))
+        self.reset(ptr)
+
+    @staticmethod
+    def fromFile(filePath, inFunc = None, outFunc = None):
+        with open(filePath) as fp:
+            strings = fp.readline().strip().split(",")
+            program = list(map(int, strings))
+            return Process(program, inFunc = inFunc, outFunc = outFunc)
+
+    def reset(self, ptr = 0):
+        self.ptr = ptr
         self.mem = [0] * 8096 # 8k shold be enough for everyone
         self.ptr = ptr
         self.running = True
         self.realtiveBase = 0
-        self.outFunc = outFunc or (lambda v : print(v))
-        self.inFunc = inFunc or (lambda : input("Input: "))
-        for i in range(len(mem)):
-            self.mem[i] = mem[i]
-    
+        for i in range(len(self.program)):
+            self.mem[i] = self.program[i]
+        return self
+
     def getParam(self, pos, mode):
         adr = self.ptr + pos
         mode = mode // (10 ** (pos - 1))
