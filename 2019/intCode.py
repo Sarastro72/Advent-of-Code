@@ -1,8 +1,9 @@
 class Process:
-    def __init__(self, program, ptr=0, inFunc = None, outFunc = None):
+    def __init__(self, program, ptr=0, inFunc = None, outFunc = None, memSize = 8096):
         self.program = program
         self.outFunc = outFunc or (lambda v : print(v))
         self.inFunc = inFunc or (lambda : input("Input: "))
+        self.memSize = 8096
         self.reset(ptr)
 
     @staticmethod
@@ -14,7 +15,7 @@ class Process:
 
     def reset(self, ptr = 0):
         self.ptr = ptr
-        self.mem = [0] * 8096 # 8k shold be enough for everyone
+        self.mem = [0] * self.memSize
         self.ptr = ptr
         self.running = True
         self.realtiveBase = 0

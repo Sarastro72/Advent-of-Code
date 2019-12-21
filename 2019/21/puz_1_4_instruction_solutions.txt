@@ -1,0 +1,89 @@
+ 3.79%  
+OR A T
+AND C T
+NOT T J
+AND D J
+
+ 8.66%  
+NOT A T
+NOT C J
+AND D J
+OR T J
+
+ 8.67%  
+NOT A T
+NOT C J
+OR T J
+AND D J
+
+ 25.93%  
+NOT C T
+AND D T
+NOT A J
+OR T J
+
+ 26.77%  
+NOT C T
+NOT A J
+AND D T
+OR T J
+
+ 26.84%  
+NOT C T
+NOT A J
+OR T J
+AND D J
+
+ 35.05%  
+NOT D T
+OR C T
+AND A T
+NOT T J
+
+ 55.37%  
+OR A J
+AND C J
+NOT J J
+AND D J
+
+ 57.05%  
+NOT A J
+NOT C T
+AND D T
+OR T J
+
+ 57.11%  
+NOT A J
+NOT C T
+OR T J
+AND D J
+
+ 73.52%  
+OR C J
+AND A J
+NOT J J
+AND D J
+
+ 75.27%  
+NOT C J
+NOT A T
+AND D J
+OR T J
+
+ 75.28%  
+NOT C J
+NOT A T
+OR T J
+AND D J
+
+ 77.44%  
+NOT C J
+AND D J
+NOT A T
+OR T J
+
+ 86.66%  
+NOT D J
+OR C J
+AND A J
+NOT J J
