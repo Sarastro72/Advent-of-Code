@@ -1,8 +1,8 @@
 import sys
 sys.path.append('..')
-from intCode import Process
+from intCode import IntComputer
 output = []
-process = Process.fromFile(sys.argv[1], outFunc= lambda v : output.append(v))
+process = IntComputer.fromFile(sys.argv[1], outFunc= lambda v : output.append(v))
 mmap = []
 count = 0
 for y in range(50):

@@ -3,7 +3,7 @@ import sys
 import os
 import time
 sys.path.append('..')
-from intCode import Process
+from intCode import IntComputer
 
 inbuf = []
 def readInput():
@@ -51,7 +51,7 @@ def instruction(nr):
     w = (nr // 18) 
     return f"{CMD[c]} {REG[r]} {WRREG[w]}"
 
-proc = Process.fromFile("input", inFunc = readInput, outFunc = writeOutput)
+proc = IntComputer.fromFile("input", inFunc = readInput, outFunc = writeOutput)
 
 # Brute force it baby
 for a in range(8,32):       # FF close to first slution 

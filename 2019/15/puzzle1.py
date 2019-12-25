@@ -115,7 +115,7 @@ with open("input") as fp:
     strings = fp.readline().strip().split(",")
     program = list(map(int, strings))
 
-p = intCode.Process(program, inFunc = provideInput, outFunc=readOutput)
+p = intCode.IntComputer(program, inFunc = provideInput, outFunc=readOutput)
 p.run()
 
 

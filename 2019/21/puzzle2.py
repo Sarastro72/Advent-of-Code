@@ -3,7 +3,7 @@ import sys
 import os
 import time
 sys.path.append('..')
-from intCode import Process
+from intCode import IntComputer
 
 inbuf = []
 def readInput():
@@ -37,7 +37,7 @@ def clearProg():
     outbuf = ""
     outlines = []
 
-proc = Process.fromFile("input", inFunc = readInput, outFunc = writeOutput)
+proc = IntComputer.fromFile("input", inFunc = readInput, outFunc = writeOutput)
 
 #    @   v   v   v   v    
 #    #####.#.#.##..###

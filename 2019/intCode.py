@@ -1,4 +1,4 @@
-class Process:
+class IntComputer:
     def __init__(self, program, ptr=0, inFunc = None, outFunc = None, memSize = 8096):
         self.program = program
         self.outFunc = outFunc or (lambda v : print(v))
@@ -11,7 +11,7 @@ class Process:
         with open(filePath) as fp:
             strings = fp.readline().strip().split(",")
             program = list(map(int, strings))
-            return Process(program, inFunc = inFunc, outFunc = outFunc)
+            return IntComputer(program, inFunc = inFunc, outFunc = outFunc)
 
     def reset(self, ptr = 0):
         self.ptr = ptr
@@ -48,22 +48,25 @@ class Process:
         else:
             print("ERROR: Unknown write mode {mode}!")
 
-    def run(self, inputs = []):
+    def run(self, inputs = [], suspendOnIO = False, debug = False):
         outputs = []
-        while True:
+        suspended = False
+        while self.running and not suspended:
             #print(self.mem)
             cmd = self.mem[self.ptr] % 100
             mode = self.mem[self.ptr] // 100
             if (cmd == 1): # Add
                 p1 = self.getParam(1, mode)
                 p2 = self.getParam(2, mode)
-                #print(f"add {p1}  {p2}")
+                if (debug):
+                    print(f"add {p1}  {p2}")
                 self.setMem(3, mode, p1 + p2)
                 self.ptr += 4
             elif (cmd == 2): # Multiply
                 p1 = self.getParam(1, mode)
                 p2 = self.getParam(2, mode)
-                #print(f"mul {p1}  {p2}")
+                if (debug):
+                    print(f"mul {p1}  {p2}")
                 self.setMem(3, mode, p1 * p2)
                 self.ptr += 4
             elif (cmd == 3): # Input
@@ -71,18 +74,26 @@ class Process:
                     inp = self.inFunc()
                 else:
                     inp = inputs.pop(0)
-                #print(f"input {inp}")
+                if (debug):
+                    p1 = self.getParam(1, mode)
+                    print(f"input {inp} {p1}")
                 self.setMem(1, mode, int(inp))
                 self.ptr += 2
+                if (suspendOnIO):
+                    suspended = True
             elif (cmd == 4): # Output
                 p1 = self.getParam(1, mode)
                 self.outFunc(p1)
-                #print(f"output {p1}")
+                if (debug):
+                    print(f"output {p1}")
                 self.ptr += 2
+                if (suspendOnIO):
+                    suspended = True
             elif (cmd == 5): # Jump if true
                 p1 = self.getParam(1, mode)
                 p2 = self.getParam(2, mode)
-                #print(f"jtrue {p1} {p2}")
+                if (debug):
+                    print(f"jtrue {p1} {p2}")
                 if (p1 != 0):
                     self.ptr = p2
                 else:
@@ -90,7 +101,8 @@ class Process:
             elif (cmd == 6): # Jump if false
                 p1 = self.getParam(1, mode)
                 p2 = self.getParam(2, mode)
-                #print(f"jfalse {p1} {p2}")
+                if (debug):
+                    print(f"jfalse {p1} {p2}")
                 if (p1 == 0):
                     self.ptr = p2
                 else:
@@ -98,7 +110,8 @@ class Process:
             elif (cmd == 7): # Less than
                 p1 = self.getParam(1, mode)
                 p2 = self.getParam(2, mode)
-                #print(f"less {p1} {p2}")
+                if (debug):
+                    print(f"less {p1} {p2}")
                 if (p1 < p2):
                     self.setMem(3, mode, 1)
                 else:
@@ -107,7 +120,8 @@ class Process:
             elif (cmd == 8): # Equals
                 p1 = self.getParam(1, mode)
                 p2 = self.getParam(2, mode)
-                #print(f"eq {p1} {p2}")
+                if (debug):
+                    print(f"eq {p1} {p2}")
                 if (p1 == p2):
                     self.setMem(3, mode, 1)
                 else:
@@ -115,15 +129,15 @@ class Process:
                 self.ptr += 4
             elif (cmd == 9): # Set relative base
                 p1 = self.getParam(1, mode)
-                #print(f"addrb {p1}")
+                if (debug):
+                    print(f"addrb {p1}")
                 self.realtiveBase += p1
                 self.ptr += 2
             elif (cmd == 99): # End
                 self.running = False
-                #print(f"end")
+                if (debug):
+                    print(f"end")
                 #print(f"Program terminated with {outputs}")
-                break
             else:
                 self.running = False
                 print("ERROR: Unknown command at position {}".format(self.ptr))
-                break

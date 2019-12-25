@@ -54,7 +54,7 @@ with open("input") as fp:
 smap = []
 outputStr=""
 
-p = intCode.Process(program, inFunc = provideInput, outFunc=readOutput)
+p = intCode.IntComputer(program, inFunc = provideInput, outFunc=readOutput)
 p.run()
 
 drawDisplay()
