@@ -2,7 +2,7 @@ filepath = 'input'
 target = 2020
 
 with open(filepath) as fp:
-     values=  sorted(list(map(int, fp))) #sorted(fp.read().splitlines())
+     values=  sorted(list(map(int, fp)))
 
 bot=0
 top=len(values) - 1
